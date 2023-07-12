@@ -67,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
             return False
         if args[0] in classes:
             if len(args) > 1:
-                key = args[0] + "." args[1]
+                key = args[0] + "." + args[1]
                 if key in storage.all():
                     print(storage.all()[key])
                 else:
@@ -121,24 +121,25 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
         elif args[0] in classes:
-            print("** instance id missing **")
-            return
-        key = args[0] + "." + args[1]
-        if key not in storage.all():
-            print("** no instance found **")
-        else:
-            obj = storage.all()[key]
-            immutable_attrs = ["id", "created_at", "updated_at"]
-            if obj:
-                tokens = shlex.split(arg)
-                if len(tokens) < 3:
-                    print("** attribute name missing **")
-                elif len(tokens) < 4:
-                    print("** value missing **")
-                elif tokens[2] not in immutable_attrs:
-                    obj.__dict__[tokens[2]] = tokens[3]
-                    obj.updated_at = datetime.now()
-                    storage.save()
+            if len(args) < 2:
+                print("** instance id missing **")
+                return
+            key = args[0] + "." + args[1]
+            if key not in storage.all():
+                print("** no instance found **")
+            else:
+                obj = storage.all()[key]
+                immutable_attrs = ["id", "created_at", "updated_at"]
+                if obj:
+                    tokens = shlex.split(arg)
+                    if len(tokens) < 3:
+                        print("** attribute name missing **")
+                    elif len(tokens) < 4:
+                        print("** value missing **")
+                    elif tokens[2] not in immutable_attrs:
+                        obj.__dict__[tokens[2]] = tokens[3]
+                        obj.updated_at = datetime.now()
+                        storage.save()
         else:
             print("** class doesn't exist **")
 
