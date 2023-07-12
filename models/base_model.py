@@ -6,6 +6,7 @@ This is a module that implements the BaseModel class
 
 from uuid import uuid4
 from datetime import datetime
+from models.engine.file_storage import FileStorage
 
 class BaseModel:
     """
@@ -25,6 +26,7 @@ class BaseModel:
         else:
             self.id = str(uuid4())
             self.created_at = self.updated_at = datetime.now()
+            FileStorage().new(self)
 
     def __str__(self):
         """
@@ -37,6 +39,7 @@ class BaseModel:
         Updates 'self_updated_at' with the current datetime
         """
         self.updated_at = datetime.now()
+        FileStorage().save()
 
     def to_dict(self):
         """
