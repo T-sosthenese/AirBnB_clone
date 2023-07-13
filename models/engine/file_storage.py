@@ -1,5 +1,13 @@
 #!/usr/bin/python3
+"""
+FileStorage Module
+"""
+
 import json
+from models.base_model import BaseModel
+from models.user import User
+
+
 
 class FileStorage:
     """
@@ -42,13 +50,16 @@ class FileStorage:
                 json_data = file.read()
                 obj_dict = json.loads(json_data)
 
-                from models.base_model import BaseModel
-
                 for key, value in obj_dict.items():
                     class_name = value['__class__']
                     if class_name == 'BaseModel':
                         instance = BaseModel(**value)
                         self.__objects[key] = instance
+                    elif class_name == 'User':
+                        instance = User(**value)
+                    self.__objects[key] = instance
 
         except FileNotFoundError:
             pass
+
+
