@@ -1,6 +1,7 @@
 import unittest
 from models.base_model import BaseModel
 
+
 class TestBaseModel(unittest.TestCase):
     def test_initialization(self):
         base_model = BaseModel()
@@ -33,6 +34,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn(base_model.id, string_representation)
         self.assertIn("created_at", string_representation)
         self.assertIn("updated_at", string_representation)
+
 
 if __name__ == '__main__':
     unittest.main()
