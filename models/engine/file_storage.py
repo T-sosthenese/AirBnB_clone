@@ -8,7 +8,6 @@ from models.base_model import BaseModel
 from models.user import User
 
 
-
 class FileStorage:
     """
     Class for serializing instances to a JSON file and deserializing JSON file
@@ -61,5 +60,3 @@ class FileStorage:
 
         except FileNotFoundError:
             pass
-
-

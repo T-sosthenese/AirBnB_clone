@@ -19,7 +19,7 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key != '__class__':
                     if key in ('created_at', 'updated_at'):
-                        setattr(self, key,datetime.fromisoformat(value))
+                        setattr(self, key, datetime.fromisoformat(value))
                     else:
                         setattr(self, key, value)
         else:
@@ -30,7 +30,11 @@ class BaseModel:
         """
         Returns the string representation of BaseModel object.
         """
-        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(
+                type(self).__name__,
+                self.id,
+                self.__dict__
+                )
 
     def save(self):
         """
