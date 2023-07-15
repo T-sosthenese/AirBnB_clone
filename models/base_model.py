@@ -52,7 +52,7 @@ class BaseModel:
         dict_1 = self.__dict__.copy()
         dict_1["__class__"] = self.__class__.__name__
         for k, v in self.__dict__.items():
-            if k in ("created_at" "updated_at"):
+            if k in ("created_at", "updated_at"):
                 v = self.__dict__[k].isoformat()
                 dict_1[k] = v
         return dict_1
