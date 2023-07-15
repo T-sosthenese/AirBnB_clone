@@ -11,4 +11,6 @@ class Review(BaseModel):
 
     def __init__(self, *args, **kwargs):
         """ Instantiation """
-        super().__init__(*args, **kwargs)
+        place_id = ""
+        user_id = ""
+        text = ""
