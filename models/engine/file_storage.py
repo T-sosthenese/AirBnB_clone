@@ -6,7 +6,11 @@ FileStorage Module
 import json
 from models.base_model import BaseModel
 from models.user import User
-
+from models.state import State
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
@@ -34,11 +38,11 @@ class FileStorage:
     def save(self):
         """
         Serializes __objects to the JSON file (path: __file_path)"""
-        obj_dict = {}
-        for key, value in self.__objects.items():
-            obj_dict[key] = value.to_dict()
-        with open(self.__file_path, 'w') as file:
-            json.dump(obj_dict, file)
+        with open(self.__file_path, mode='w') as f:
+            dict_storage = {}
+            for key, value in self.__objects.items():
+                dict_storage[key] = value.to_dict()
+            json.dump(dict_storage, f)
 
     def reload(self):
         """
@@ -46,20 +50,8 @@ class FileStorage:
                     _path) exists)
         """
         try:
-            with open(self.__file_path, 'r') as file:
-                json_data = file.read()
-                obj_dict = json.loads(json_data)
-
-                for key, value in obj_dict.items():
-                    class_name = value['__class__']
-                    if class_name == 'BaseModel':
-                        instance = BaseModel(**value)
-                        self.__objects[key] = instance
-                    elif class_name == 'User':
-                        instance = User(**value)
-                    self.__objects[key] = instance
-
+            with open(self.__file_path, encoding='utf-8') as f:
+                for obj in json.load(f).values():
+                    self.new(eval(obj["__class__"])(**obj))
         except FileNotFoundError:
-            pass
-
-
+            return
