@@ -49,7 +49,9 @@ def parse(arg):
 
 
 def check_args(args):
-    "Checks whether the arguments passed to the prompt are valid."""
+    """
+    Checks whether the arguments passed to the prompt are valid.
+    """
     arg_list = parse(args)
     if len(arg_list) == 0:
         print("** class name missing **")
@@ -60,12 +62,15 @@ def check_args(args):
 
 
 class HBNBCommand(cmd.Cmd):
-    """ The class that implements the customized comdline interface."""
+    """ The class that implements the customized cmdline interface."""
     prompt = "(hbnb) "
     storage = models.storage
 
     def emptyline(self):
-        """Prints an empty prompts when the enter pressed without args"""
+        """
+        Prints an empty prompts when the enter key is pressed without
+        argument pass
+        """
         return False
 
     def default(self, arg):
@@ -89,10 +94,11 @@ class HBNBCommand(cmd.Cmd):
                     call = "{} {}".format(arg1[0], command[1])
                     return action_map[command[0]](call)
         print("*** Unknown syntax: {}".format(arg))
-        return False
 
     def do_EOF(self, argv):
-        """" EOF signal to imply end of program."""
+        """
+        EOF signal to imply end of program.
+        """
         print("")
         return True
 
@@ -101,16 +107,21 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, argv):
-        """Creates a new instance of BaseModel, saving it to the json file
-        and prints the instance id."""
+        """
+        Creates a new instance of BaseModel, saves it to the JSON file
+        and prints the instance id.
+        """
         args = check_args(argv)
         if args:
-            print(eval(args[0])().id)
-            self.storage.save()
+            instance = eval(args[0])()
+            print(instance.id)
+            instance.save()
 
     def do_show(self, argv):
-        """ Prints the string repr of an instance based on class name
-        and its instance id."""
+        """
+        Prints the string representation of an instance based on class name
+        and its instance id.
+        """
         args = check_args(argv)
         if args:
             if len(args) != 2:
@@ -123,7 +134,9 @@ class HBNBCommand(cmd.Cmd):
                     print(self.storage.all()[key])
 
     def do_all(self, argv):
-        """ prints all instances currently in storage."""
+        """
+        Prints all instances currently in storage.
+        """
         arg_list = split(argv)
         objects = self.storage.all().values()
         if not arg_list:
@@ -135,7 +148,7 @@ class HBNBCommand(cmd.Cmd):
                 print([str(obj) for obj in objects if arg_list[0] in str(obj)])
 
     def do_destroy(self, argv):
-        """ deletes instances based on id."""
+        """Deletes instances based on id."""
         arg_list = check_args(argv)
         if arg_list:
             if len(arg_list) == 1:

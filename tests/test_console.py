@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+"""
+This is the test suite for the console module
+"""
 import unittest
 from unittest.mock import patch
 from io import StringIO
