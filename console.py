@@ -116,6 +116,7 @@ class HBNBCommand(cmd.Cmd):
             instance = eval(args[0])()
             print(instance.id)
             instance.save()
+            return True
 
     def do_show(self, argv):
         """
@@ -131,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
                 if key not in self.storage.all():
                     print("** no instance found **")
                 else:
-                    print(self.storage.all()[key])
+                    print(str(self.storage.all()[key]))
 
     def do_all(self, argv):
         """
@@ -176,7 +177,7 @@ class HBNBCommand(cmd.Cmd):
                         print("** value is missing **")
                     else:
                         obj = self.storage.all()[instance_id]
-                        if arg_list[2] in type(obj).__dict__:
+                        if arg_list[2] in obj.__class__.__dict__:
                             v_type = type(obj.__class__.__dict__[arg_list[2]])
                             setattr(obj, arg_list[2], v_type(arg_list[3]))
                         else:
